@@ -1,0 +1,19 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+		buildConfigurationList = AABBCC001;
+		isa = PBXProject;
+		mainGroup = AABBCC002;
+		productRefGroup = AABBCC003;
+		projectDirPath = "";
+		projectRoot = "";
+		targets = (
+			AABBCC004,
+		);
+	};
+	rootObject = AABBCC000;
+}
