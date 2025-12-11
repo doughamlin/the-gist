@@ -24,11 +24,11 @@ TheGist/
 **What it does**: This is the starting point of the entire app. When you launch The Gist, iOS looks for the `@main` attribute and runs this file first.
 
 **Key concepts**:
-- `@main`: Tells iOS "start the app here"
-- `App` protocol: Required for all SwiftUI apps
-- `Scene`: Represents a window or screen in your app
-- `WindowGroup`: Creates a window for iPhone/iPad
-- `@StateObject`: Creates and owns an object that survives app lifecycle
+- [`@main`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/attributes/#main): Tells iOS "start the app here"
+- [`App` protocol](https://developer.apple.com/documentation/swiftui/app): Required for all SwiftUI apps
+- [`Scene`](https://developer.apple.com/documentation/swiftui/scene): Represents a window or screen in your app
+- [`WindowGroup`](https://developer.apple.com/documentation/swiftui/windowgroup): Creates a window for iPhone/iPad
+- [`@StateObject`](https://developer.apple.com/documentation/swiftui/stateobject): Creates and owns an object that survives app lifecycle
 
 **Code breakdown**:
 ```swift
@@ -57,10 +57,10 @@ struct TheGistApp: App {
 **What it does**: Defines the structure of data received from GitHub's API and sent back to it.
 
 **Key concepts**:
-- `struct`: A data type that groups related properties together
-- `Codable`: Allows converting between Swift objects and JSON
-- `Identifiable`: Required for SwiftUI lists (needs unique `id`)
-- `enum CodingKeys`: Maps JSON field names to Swift property names
+- [`struct`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures/): A data type that groups related properties together
+- [`Codable`](https://developer.apple.com/documentation/swift/codable): Allows converting between Swift objects and JSON
+- [`Identifiable`](https://developer.apple.com/documentation/swift/identifiable): Required for SwiftUI lists (needs unique `id`)
+- [`enum CodingKeys`](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types): Maps JSON field names to Swift property names
 
 **Main structures**:
 
@@ -135,11 +135,11 @@ This converts the dictionary to a sorted array for easier display in lists.
 **What it does**: Handles all communication with GitHub's REST API. It's the "bridge" between your app and GitHub's servers.
 
 **Key concepts**:
-- `class`: Reference type (vs struct's value type)
-- `static let shared`: Singleton pattern - only one instance exists
-- `async/await`: Modern way to handle asynchronous operations
-- `throws`: Can produce errors that must be handled
-- `URLSession`: Apple's networking framework
+- [`class`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures/): Reference type (vs struct's value type)
+- [`static let shared`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Type-Properties): Singleton pattern - only one instance exists
+- [`async/await`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/): Modern way to handle asynchronous operations
+- [`throws`](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/errorhandling/): Can produce errors that must be handled
+- [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession): Apple's networking framework
 
 **Architecture pattern**: This is a **Service Layer** - it separates networking logic from UI code.
 
@@ -231,10 +231,10 @@ This ensures only one instance exists, which is good for:
 **What it does**: Manages the user's login state and GitHub token throughout the app.
 
 **Key concepts**:
-- `ObservableObject`: Allows SwiftUI views to watch for changes
-- `@Published`: Automatically notifies views when value changes
-- `UserDefaults`: Simple key-value storage (like browser localStorage)
-- `Task`: Runs async code
+- [`ObservableObject`](https://developer.apple.com/documentation/combine/observableobject): Allows SwiftUI views to watch for changes
+- [`@Published`](https://developer.apple.com/documentation/combine/published): Automatically notifies views when value changes
+- [`UserDefaults`](https://developer.apple.com/documentation/foundation/userdefaults): Simple key-value storage (like browser localStorage)
+- [`Task`](https://developer.apple.com/documentation/swift/task): Runs async code
 
 **Architecture pattern**: This is a **State Manager** using the MVVM pattern.
 
@@ -329,13 +329,13 @@ struct SomeView: View {
 All views use **SwiftUI**, Apple's declarative UI framework.
 
 **Key SwiftUI concepts**:
-- `View` protocol: All UI components conform to this
-- `body`: Required property that returns the view's content
-- `@State`: Private view state
-- `@StateObject`: Owns an ObservableObject
-- `@ObservedObject`: Watches an ObservableObject
-- `@EnvironmentObject`: Shared object from parent
-- `@Environment`: System-provided values
+- [`View` protocol](https://developer.apple.com/documentation/swiftui/view): All UI components conform to this
+- [`body`](https://developer.apple.com/documentation/swiftui/view/body-swift.property): Required property that returns the view's content
+- [`@State`](https://developer.apple.com/documentation/swiftui/state): Private view state
+- [`@StateObject`](https://developer.apple.com/documentation/swiftui/stateobject): Owns an ObservableObject
+- [`@ObservedObject`](https://developer.apple.com/documentation/swiftui/observedobject): Watches an ObservableObject
+- [`@EnvironmentObject`](https://developer.apple.com/documentation/swiftui/environmentobject): Shared object from parent
+- [`@Environment`](https://developer.apple.com/documentation/swiftui/environment): System-provided values
 
 ---
 
@@ -907,7 +907,7 @@ Image(systemName: "heart.fill")  // For SF Symbols (Apple's icons)
 
 ## 🔄 Common Patterns in the Code
 
-### 1. Async/Await Pattern
+### 1. [Async/Await Pattern](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/)
 ```swift
 Task {
     let result = try await someAsyncFunction()
@@ -915,13 +915,13 @@ Task {
 }
 ```
 
-### 2. Published Properties
+### 2. [Published Properties](https://developer.apple.com/documentation/combine/published)
 ```swift
 @Published var data: [Item] = []
 // When data changes, views re-render
 ```
 
-### 3. State Management
+### 3. [State Management](https://developer.apple.com/documentation/swiftui/state-and-data-flow)
 ```swift
 @State private var text = ""           // Local to view
 @StateObject private var vm = VM()     // View owns object
@@ -929,7 +929,7 @@ Task {
 @EnvironmentObject var auth: Auth      // Shared globally
 ```
 
-### 4. Error Handling
+### 4. [Error Handling](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/errorhandling/)
 ```swift
 do {
     try await riskyOperation()
@@ -938,14 +938,14 @@ do {
 }
 ```
 
-### 5. Main Actor
+### 5. [Main Actor](https://developer.apple.com/documentation/swift/mainactor)
 ```swift
 await MainActor.run {
     // Update UI properties here
 }
 ```
 
-### 6. Conditional Views
+### 6. [Conditional Views](https://developer.apple.com/documentation/swiftui/viewbuilder)
 ```swift
 if condition {
     View1()
@@ -959,35 +959,35 @@ if condition {
 ## 📚 Key iOS/Swift Concepts Used
 
 ### Swift Language Features
-- **Structs**: Value types for data
-- **Classes**: Reference types for managers
-- **Protocols**: Contracts (Codable, Identifiable, etc.)
-- **Optionals**: Values that might be nil (`String?`)
-- **Async/Await**: Modern concurrency
-- **Generics**: Type-safe code (`Array<Gist>`)
-- **Closures**: Inline functions `{ ... }`
-- **Computed Properties**: `var title: String { ... }`
+- **[Structs](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures/)**: Value types for data
+- **[Classes](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures/)**: Reference types for managers
+- **[Protocols](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols/)**: Contracts (Codable, Identifiable, etc.)
+- **[Optionals](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/#Optionals)**: Values that might be nil (`String?`)
+- **[Async/Await](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/)**: Modern concurrency
+- **[Generics](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics/)**: Type-safe code (`Array<Gist>`)
+- **[Closures](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/)**: Inline functions `{ ... }`
+- **[Computed Properties](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties/#Computed-Properties)**: `var title: String { ... }`
 
 ### SwiftUI Features
-- **Declarative UI**: Describe what, not how
-- **State-driven**: UI reflects state
-- **Composition**: Small views build big views
-- **Modifiers**: Chain to customize (`.font()`, `.padding()`)
-- **View builders**: Build UI with if/else/for
+- **[Declarative UI](https://developer.apple.com/documentation/swiftui)**: Describe what, not how
+- **[State-driven](https://developer.apple.com/documentation/swiftui/state-and-data-flow)**: UI reflects state
+- **[Composition](https://developer.apple.com/documentation/swiftui/view-composition)**: Small views build big views
+- **[Modifiers](https://developer.apple.com/documentation/swiftui/view-modifiers)**: Chain to customize (`.font()`, `.padding()`)
+- **[View builders](https://developer.apple.com/documentation/swiftui/viewbuilder)**: Build UI with if/else/for
 
 ### iOS Patterns
-- **MVVM**: Model-View-ViewModel architecture
-- **Singleton**: One instance (`shared`)
-- **Delegation**: Pass data between views
-- **Observation**: Watch for changes (`ObservableObject`)
-- **Environment**: Share data down tree
+- **[MVVM](https://developer.apple.com/forums/thread/699003)**: Model-View-ViewModel architecture
+- **[Singleton](https://developer.apple.com/documentation/swift/managing-a-shared-resource-using-a-singleton)**: One instance (`shared`)
+- **[Delegation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols/#Delegation)**: Pass data between views
+- **[Observation](https://developer.apple.com/documentation/combine/observableobject)**: Watch for changes (`ObservableObject`)
+- **[Environment](https://developer.apple.com/documentation/swiftui/environment)**: Share data down tree
 
 ### Networking
-- **REST API**: HTTP requests (GET, POST, PATCH, DELETE)
-- **JSON**: Data format
-- **Codable**: JSON ↔ Swift objects
-- **URLSession**: Network requests
-- **Authentication**: Bearer tokens
+- **[REST API](https://developer.apple.com/documentation/foundation/url_loading_system)**: HTTP requests (GET, POST, PATCH, DELETE)
+- **[JSON](https://developer.apple.com/documentation/foundation/jsondecoder)**: Data format
+- **[Codable](https://developer.apple.com/documentation/swift/codable)**: JSON ↔ Swift objects
+- **[URLSession](https://developer.apple.com/documentation/foundation/urlsession)**: Network requests
+- **[Authentication](https://developer.apple.com/documentation/foundation/url_loading_system/handling_an_authentication_challenge)**: Bearer tokens
 
 ---
 
