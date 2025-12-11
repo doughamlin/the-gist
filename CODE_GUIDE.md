@@ -694,6 +694,39 @@ Button(action: saveGist) {
 }
 ```
 
+**Markdown preview**:
+When viewing a markdown file (`.md` or `.markdown`), a preview button appears:
+
+```swift
+private var isCurrentFileMarkdown: Bool {
+    guard !viewModel.editableFiles.isEmpty else { return false }
+    let currentFile = viewModel.editableFiles[viewModel.selectedFileIndex]
+    let filename = currentFile.filename.lowercased()
+    return filename.hasSuffix(".md") || filename.hasSuffix(".markdown")
+}
+```
+
+The preview button is conditionally shown in the toolbar:
+```swift
+ToolbarItem(placement: .navigationBarLeading) {
+    if isCurrentFileMarkdown {
+        Button(action: openPreview) {
+            Label("Preview", systemImage: "doc.text.magnifyingglass")
+        }
+    }
+}
+```
+
+When tapped, it opens an in-app Safari view showing GitHub's rendered markdown:
+```swift
+.sheet(isPresented: $showingSafariView) {
+    if let url = URL(string: gist.htmlUrl) {
+        SafariView(url: url)
+            .ignoresSafeArea()
+    }
+}
+```
+
 ---
 
 #### `GistDetailViewModel` - Edit Logic
@@ -884,6 +917,61 @@ private func signOut() {
     dismiss()
 }
 ```
+
+---
+
+### `Views/SafariView.swift` - In-App Safari Wrapper
+
+**What it does**: Wraps UIKit's `SFSafariViewController` so it can be used in SwiftUI for displaying web content in-app.
+
+**Key concepts**:
+- [`UIViewControllerRepresentable`](https://developer.apple.com/documentation/swiftui/uiviewcontrollerrepresentable): Protocol to bridge UIKit view controllers to SwiftUI
+- [`SFSafariViewController`](https://developer.apple.com/documentation/safariservices/sfsafariviewcontroller): Full-featured in-app browser
+
+**Why use this?**: SwiftUI doesn't have a native web view component, so we bridge UIKit's Safari view controller.
+
+**Structure**:
+```swift
+struct SafariView: UIViewControllerRepresentable {
+    let url: URL
+
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        let configuration = SFSafariViewController.Configuration()
+        configuration.entersReaderIfAvailable = false
+
+        let safariViewController = SFSafariViewController(url: url, configuration: configuration)
+        safariViewController.preferredControlTintColor = .systemBlue
+
+        return safariViewController
+    }
+
+    func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {
+        // No updates needed
+    }
+}
+```
+
+**How it's used**:
+```swift
+// In GistDetailView
+.sheet(isPresented: $showingSafariView) {
+    if let url = URL(string: gist.htmlUrl) {
+        SafariView(url: url)
+            .ignoresSafeArea()
+    }
+}
+```
+
+**UIViewControllerRepresentable lifecycle**:
+1. `makeUIViewController`: Called once to create the view controller
+2. `updateUIViewController`: Called when SwiftUI state changes (not used here)
+
+**Built-in features**: `SFSafariViewController` automatically includes:
+- Navigation toolbar with Done button
+- Open in Safari button
+- Share button
+- Reader mode (if available)
+- AutoFill and password management
 
 ---
 

@@ -12,6 +12,7 @@ A native iOS application that allows you to view, create, edit, and manage your 
 - **Multi-file Support**: Handle gists with multiple files
 - **Public/Private**: Create both public and private gists
 - **Real-time Updates**: Pull to refresh to sync with GitHub
+- **Markdown Preview**: In-app preview for markdown files with option to open in Safari
 - **Syntax Highlighting Info**: Display file language and type information
 
 ## Requirements
@@ -85,7 +86,9 @@ TheGist/
 │       ├── LoginView.swift           # Authentication screen
 │       ├── GistListView.swift        # List of all gists
 │       ├── GistDetailView.swift      # Edit gist content
-│       └── CreateGistView.swift      # Create new gist
+│       ├── CreateGistView.swift      # Create new gist
+│       ├── SettingsView.swift        # Settings and sign out
+│       └── SafariView.swift          # In-app Safari for previews
 └── TheGist.xcodeproj/                # Xcode project (you create this)
 ```
 
@@ -110,6 +113,13 @@ TheGist/
 4. Tap "Save" to push changes to GitHub
 5. Changes are saved when you see the success alert
 
+### Previewing Markdown Files
+
+1. When viewing a markdown file (`.md` or `.markdown`), a preview button appears in the navigation bar
+2. Tap the preview button (magnifying glass icon) to see the rendered markdown
+3. The preview opens in an in-app Safari view showing GitHub's formatted version
+4. Tap "Done" to return to editing, or use the toolbar to open in Safari
+
 ### Creating a New Gist
 
 1. Tap the "+" button in the navigation bar
@@ -131,7 +141,8 @@ TheGist/
 
 ### Signing Out
 
-- Tap "Sign Out" in the top-left corner of the gist list
+- Tap the settings icon (gear) in the top-left corner of the gist list
+- Tap "Sign Out" in the settings screen
 - Your token will be removed from the device
 
 ## API Integration
@@ -204,8 +215,10 @@ All API calls include the Bearer token in the Authorization header.
 - **ContentView**: Routes between login and main app
 - **LoginView**: Token input and authentication
 - **GistListView**: Master list with MVVM pattern
-- **GistDetailView**: Edit view with multi-file support
+- **GistDetailView**: Edit view with multi-file support and markdown preview
 - **CreateGistView**: New gist creation form
+- **SettingsView**: User info and sign out functionality
+- **SafariView**: UIViewControllerRepresentable wrapper for in-app Safari
 
 ## Future Enhancements
 
@@ -219,7 +232,6 @@ Potential features for future versions:
 - Offline support with local caching
 - iPad optimization with split view
 - Code syntax highlighting in editor
-- Markdown preview for .md files
 - Multi-file editing in one gist
 - Drag and drop file management
 
