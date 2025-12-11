@@ -15,15 +15,18 @@ struct CodeEditor: UIViewRepresentable {
         textView.smartQuotesType = .no
         textView.smartInsertDeleteType = .no
 
-        // Disable line wrapping - this is the key setting
+        // Disable line wrapping - critical settings
         textView.textContainer.lineBreakMode = .byClipping
         textView.textContainer.widthTracksTextView = false
-        textView.textContainer.size = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        textView.textContainer.containerSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        textView.textContainer.lineFragmentPadding = 0
 
-        // Enable scrolling
+        // Enable scrolling in both directions
         textView.isScrollEnabled = true
         textView.showsHorizontalScrollIndicator = true
         textView.showsVerticalScrollIndicator = true
+        textView.alwaysBounceVertical = false
+        textView.alwaysBounceHorizontal = false
 
         // Set delegate
         textView.delegate = context.coordinator
