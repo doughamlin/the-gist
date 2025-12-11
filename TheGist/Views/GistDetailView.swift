@@ -6,10 +6,18 @@ struct GistDetailView: View {
     @StateObject private var viewModel: GistDetailViewModel
     @State private var showingSaveAlert = false
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
 
     init(gist: Gist) {
         self.gist = gist
         _viewModel = StateObject(wrappedValue: GistDetailViewModel(gist: gist))
+    }
+
+    private var isCurrentFileMarkdown: Bool {
+        guard !viewModel.editableFiles.isEmpty else { return false }
+        let currentFile = viewModel.editableFiles[viewModel.selectedFileIndex]
+        let filename = currentFile.filename.lowercased()
+        return filename.hasSuffix(".md") || filename.hasSuffix(".markdown")
     }
 
     var body: some View {
@@ -82,6 +90,13 @@ struct GistDetailView: View {
         .navigationTitle(gist.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                if isCurrentFileMarkdown {
+                    Button(action: openPreview) {
+                        Label("Preview", systemImage: "doc.text.magnifyingglass")
+                    }
+                }
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: saveGist) {
                     if viewModel.isSaving {
@@ -112,6 +127,12 @@ struct GistDetailView: View {
             if viewModel.errorMessage == nil {
                 showingSaveAlert = true
             }
+        }
+    }
+
+    private func openPreview() {
+        if let url = URL(string: gist.htmlUrl) {
+            openURL(url)
         }
     }
 }
