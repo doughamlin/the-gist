@@ -69,6 +69,89 @@ After opening the project:
 3. Click "Sign In"
 4. Once authenticated, you'll see your list of gists
 
+---
+
+## Installing on Your iPhone (Without App Store)
+
+You can install the app directly on your iPhone from Xcode without publishing to the App Store. This is called "sideloading" or development installation.
+
+### Prerequisites
+
+- A Mac with Xcode installed
+- A USB cable to connect your iPhone to your Mac
+- An Apple ID (free - doesn't require a paid developer account)
+
+### Steps to Install
+
+#### 1. Connect Your iPhone
+
+1. Connect your iPhone to your Mac using a USB cable
+2. On your iPhone, you may see an alert asking to "Trust This Computer"
+3. Tap "Trust" and enter your iPhone passcode if prompted
+4. On your Mac, you may need to click "Trust" in a popup dialog
+
+#### 2. Select Your iPhone in Xcode
+
+1. Open the TheGist project in Xcode
+2. At the top of the Xcode window, you'll see the device selector (next to the Run button)
+3. Click on it and select your iPhone from the list
+   - It should appear under "iOS Device" with your iPhone's name
+   - If you don't see it, make sure your iPhone is unlocked and connected
+
+#### 3. Configure Signing (First Time Only)
+
+1. In Xcode's Project Navigator, click on the blue "TheGist" project icon
+2. Select "TheGist" under Targets
+3. Go to the "Signing & Capabilities" tab
+4. Under "Team", select your Apple ID
+   - If you don't see your Apple ID, click "Add Account..." and sign in
+   - You can use a free Apple ID - no paid developer account needed
+5. Xcode will automatically create a provisioning profile for you
+
+#### 4. Build and Run on Your iPhone
+
+1. With your iPhone selected as the destination, click the Run button (▶) or press `Cmd+R`
+2. Xcode will build the app and install it on your iPhone
+3. You may see a progress bar on your iPhone showing the installation
+
+#### 5. Trust the Developer Certificate (First Time Only)
+
+When you first run the app, iOS will prevent it from launching because it's from an "untrusted developer." Here's how to fix this:
+
+1. On your iPhone, go to **Settings** > **General** > **VPN & Device Management**
+   - On some iOS versions, this might be called **Profiles & Device Management**
+2. Under "Developer App", you'll see your Apple ID email
+3. Tap on your Apple ID
+4. Tap "Trust [Your Apple ID]"
+5. Tap "Trust" again in the confirmation dialog
+
+#### 6. Launch the App
+
+1. Go back to your home screen
+2. Find the "The Gist" app icon
+3. Tap to launch it
+4. The app will now run normally on your iPhone!
+
+### Important Notes
+
+**App Expiration**: Apps installed this way expire after 7 days (with a free Apple ID). After 7 days:
+- The app will stop launching
+- Your data remains safe on your device
+- Simply reconnect your iPhone to your Mac and rebuild from Xcode to refresh for another 7 days
+- If you have a paid Apple Developer account ($99/year), apps last for 1 year
+
+**Wireless Debugging** (Optional): Once set up, you can install updates wirelessly:
+1. In Xcode, go to Window > Devices and Simulators
+2. Select your iPhone
+3. Check "Connect via network"
+4. You can now run and update the app without a cable (when on the same Wi-Fi network)
+
+**Multiple Devices**: You can install the app on multiple iPhones/iPads using the same process
+
+**No Data Loss**: Your gists are stored on GitHub, so even if the app expires, your data is safe. Just rebuild to access it again.
+
+---
+
 ## Project Structure
 
 ```
