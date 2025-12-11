@@ -13,15 +13,20 @@ struct LoginView: View {
                     .foregroundColor(.blue)
                     .padding(.bottom, 20)
 
-                Text("GitHub Gist Editor")
-                    .font(.title)
+                Text("The Gist")
+                    .font(.largeTitle)
                     .fontWeight(.bold)
+
+                Text("GitHub Gist Editor")
+                    .font(.title3)
+                    .foregroundColor(.secondary)
 
                 Text("Enter your GitHub Personal Access Token")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
+                    .padding(.top, 20)
 
                 SecureField("GitHub Token", text: $token)
                     .textFieldStyle(RoundedBorderTextFieldStyle())

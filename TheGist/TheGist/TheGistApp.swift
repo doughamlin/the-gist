@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct GistEditorApp: App {
+struct TheGistApp: App {
     @StateObject private var authManager = AuthenticationManager()
 
     var body: some Scene {

@@ -1,4 +1,4 @@
-# GitHub Gist Editor for iOS
+# The Gist - GitHub Gist Editor for iOS
 
 A native iOS application that allows you to view, create, edit, and manage your GitHub gists directly from your iPhone or iPad.
 
@@ -16,8 +16,8 @@ A native iOS application that allows you to view, create, edit, and manage your 
 
 ## Requirements
 
-- iOS 15.0 or later
-- Xcode 14.0 or later
+- macOS with Xcode 14.0 or later
+- iOS 15.0 or later (deployment target)
 - A GitHub account
 - GitHub Personal Access Token with `gist` scope
 
@@ -32,31 +32,59 @@ A native iOS application that allows you to view, create, edit, and manage your 
 5. Click "Generate token"
 6. **Important**: Copy the token immediately - you won't be able to see it again!
 
-### 2. Open the Project in Xcode
+### 2. Create the Xcode Project
 
-1. Clone this repository:
-   ```bash
-   git clone <repository-url>
-   cd the-gist
-   ```
+Since Xcode project files are complex, you'll need to create the project in Xcode:
 
-2. Open the project in Xcode:
-   ```bash
-   open GistEditor/GistEditor.xcodeproj
-   ```
+1. Open Xcode
+2. Click "Create a new Xcode project"
+3. Select **iOS** > **App** > Click "Next"
+4. Configure your project:
+   - **Product Name**: `TheGist`
+   - **Team**: Select your development team
+   - **Organization Identifier**: Use your reverse domain (e.g., `com.yourname`)
+   - **Interface**: **SwiftUI**
+   - **Language**: **Swift**
+   - Uncheck "Include Tests" (optional)
+5. Click "Next" and save it **inside** this repository's `TheGist` folder
+   - Navigate to your `the-gist` repository folder
+   - Select the existing `TheGist` folder
+   - Choose "Create" (if asked about merging, select "Merge")
 
-3. Select your development team in the project settings:
-   - Select the project in the navigator
-   - Go to "Signing & Capabilities"
-   - Select your team from the dropdown
+### 3. Add the Source Files
 
-### 3. Build and Run
+After creating the project:
+
+1. In Xcode's Project Navigator, **delete** the default `TheGistApp.swift` and `ContentView.swift` files (Move to Trash)
+
+2. **Right-click** on the `TheGist` folder (blue icon) in the Project Navigator
+
+3. Select **"Add Files to TheGist"**
+
+4. Navigate to `the-gist/TheGist/TheGist` and select:
+   - `TheGistApp.swift`
+   - `Models` folder
+   - `Services` folder
+   - `Views` folder
+   - Make sure "Copy items if needed" is **unchecked**
+   - Make sure "Create groups" is selected
+   - Ensure your target is checked
+
+5. Click "Add"
+
+### 4. Verify Deployment Target
+
+1. Click on your project in the Project Navigator
+2. Under "Targets", select "TheGist"
+3. In the "General" tab, set "Minimum Deployments" to iOS 15.0 or later
+
+### 5. Build and Run
 
 1. Select a simulator or connect your iOS device
 2. Click the "Run" button (▶) or press `Cmd+R`
 3. The app will build and launch
 
-### 4. Sign In
+### 6. Sign In
 
 1. When the app launches, you'll see the login screen
 2. Paste your GitHub Personal Access Token
@@ -66,22 +94,22 @@ A native iOS application that allows you to view, create, edit, and manage your 
 ## Project Structure
 
 ```
-GistEditor/
-├── GistEditor/
-│   ├── GistEditorApp.swift          # Main app entry point
+TheGist/
+├── TheGist/
+│   ├── TheGistApp.swift              # Main app entry point
+│   ├── Assets.xcassets/              # App icons and assets
 │   ├── Models/
 │   │   └── Gist.swift                # Data models for gists
 │   ├── Services/
 │   │   ├── GitHubAPIClient.swift     # GitHub API integration
 │   │   └── AuthenticationManager.swift # Auth state management
-│   ├── Views/
-│   │   ├── ContentView.swift         # Main content switcher
-│   │   ├── LoginView.swift           # Authentication screen
-│   │   ├── GistListView.swift        # List of all gists
-│   │   ├── GistDetailView.swift      # Edit gist content
-│   │   └── CreateGistView.swift      # Create new gist
-│   └── Info.plist                    # App configuration
-└── GistEditor.xcodeproj/             # Xcode project
+│   └── Views/
+│       ├── ContentView.swift         # Main content switcher
+│       ├── LoginView.swift           # Authentication screen
+│       ├── GistListView.swift        # List of all gists
+│       ├── GistDetailView.swift      # Edit gist content
+│       └── CreateGistView.swift      # Create new gist
+└── TheGist.xcodeproj/                # Xcode project (you create this)
 ```
 
 ## Usage Guide
@@ -166,23 +194,57 @@ All API calls include the Bearer token in the Authorization header.
 ### Build Errors in Xcode
 
 - Make sure you're using Xcode 14.0 or later
+- Verify iOS deployment target is set to 15.0 or later
 - Clean the build folder (`Cmd+Shift+K`)
 - Delete derived data and rebuild
+
+### Files Not Showing in Xcode
+
+- Make sure you added the files as references (not copies)
+- Try removing and re-adding the files
+- Check that the target membership is correct
+
+## Architecture
+
+### Models
+- **Gist**: Main gist data structure with files, metadata, and owner info
+- **GistFile**: Individual file within a gist
+- **GistOwner**: Owner/author information
+- Request/response types for API operations
+
+### Services
+- **GitHubAPIClient**: Handles all HTTP requests to GitHub API
+  - Async/await pattern for modern Swift concurrency
+  - Error handling with custom `APIError` types
+  - Token-based authentication
+- **AuthenticationManager**: ObservableObject managing auth state
+  - Token storage and retrieval
+  - User session management
+  - Token verification
+
+### Views (SwiftUI)
+- **TheGistApp**: App entry point with environment setup
+- **ContentView**: Routes between login and main app
+- **LoginView**: Token input and authentication
+- **GistListView**: Master list with MVVM pattern
+- **GistDetailView**: Edit view with multi-file support
+- **CreateGistView**: New gist creation form
 
 ## Future Enhancements
 
 Potential features for future versions:
 
-- Keychain integration for token storage
+- Keychain integration for secure token storage
 - Star/unstar gists
 - Fork gists
 - Comment on gists
 - Search and filter gists
 - Offline support with local caching
 - iPad optimization with split view
-- Dark mode refinements
-- Markdown preview for .md files
 - Code syntax highlighting in editor
+- Markdown preview for .md files
+- Multi-file editing in one gist
+- Drag and drop file management
 
 ## License
 
