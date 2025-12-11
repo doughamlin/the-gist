@@ -32,45 +32,22 @@ A native iOS application that allows you to view, create, edit, and manage your 
 5. Click "Generate token"
 6. **Important**: Copy the token immediately - you won't be able to see it again!
 
-### 2. Create the Xcode Project
+### 2. Open the Xcode Project
 
-Since Xcode project files are complex, you'll need to create the project in Xcode:
+The Xcode project is already included in the repository:
 
-1. Open Xcode
-2. Click "Create a new Xcode project"
-3. Select **iOS** > **App** > Click "Next"
-4. Configure your project:
-   - **Product Name**: `TheGist`
-   - **Team**: Select your development team
-   - **Organization Identifier**: Use your reverse domain (e.g., `com.yourname`)
-   - **Interface**: **SwiftUI**
-   - **Language**: **Swift**
-   - Uncheck "Include Tests" (optional)
-5. Click "Next" and save it **inside** this repository's `TheGist` folder
-   - Navigate to your `the-gist` repository folder
-   - Select the existing `TheGist` folder
-   - Choose "Create" (if asked about merging, select "Merge")
+1. Navigate to the `the-gist/TheGist` folder
+2. Double-click `TheGist.xcodeproj` to open it in Xcode
+3. When Xcode opens, you should see the project structure with all source files already included
 
-### 3. Add the Source Files
+### 3. Configure Your Development Team
 
-After creating the project:
+After opening the project:
 
-1. In Xcode's Project Navigator, **delete** the default `TheGistApp.swift` and `ContentView.swift` files (Move to Trash)
-
-2. **Right-click** on the `TheGist` folder (blue icon) in the Project Navigator
-
-3. Select **"Add Files to TheGist"**
-
-4. Navigate to `the-gist/TheGist/TheGist` and select:
-   - `TheGistApp.swift`
-   - `Models` folder
-   - `Services` folder
-   - `Views` folder
-   - Make sure "Copy items if needed" is **unchecked**
-   - Make sure "Create groups" is selected
-   - Ensure your target is checked
-
-5. Click "Add"
+1. Click on the project in the Project Navigator (the blue "TheGist" icon at the top)
+2. Under "Targets", select "TheGist"
+3. In the "Signing & Capabilities" tab, select your development team
+4. If you don't have a team, you can use a personal team (your Apple ID)
 
 ### 4. Verify Deployment Target
 

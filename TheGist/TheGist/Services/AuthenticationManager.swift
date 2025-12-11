@@ -1,7 +1,9 @@
 import Foundation
 import SwiftUI
+import Combine
 
-class AuthenticationManager: ObservableObject {
+@MainActor
+final class AuthenticationManager: ObservableObject {
     @Published var isAuthenticated = false
     @Published var currentUser: GitHubUser?
     @Published var errorMessage: String?
@@ -31,17 +33,13 @@ class AuthenticationManager: ObservableObject {
     func verifyToken() async {
         do {
             let user = try await apiClient.verifyToken()
-            await MainActor.run {
-                self.currentUser = user
-                self.isAuthenticated = true
-                self.errorMessage = nil
-            }
+            self.currentUser = user
+            self.isAuthenticated = true
+            self.errorMessage = nil
         } catch {
-            await MainActor.run {
-                self.isAuthenticated = false
-                self.currentUser = nil
-                self.errorMessage = error.localizedDescription
-            }
+            self.isAuthenticated = false
+            self.currentUser = nil
+            self.errorMessage = error.localizedDescription
         }
     }
 

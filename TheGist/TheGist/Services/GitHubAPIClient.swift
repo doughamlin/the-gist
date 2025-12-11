@@ -1,6 +1,6 @@
 import Foundation
 
-class GitHubAPIClient {
+final class GitHubAPIClient: @unchecked Sendable {
     static let shared = GitHubAPIClient()
     private let baseURL = "https://api.github.com"
 
@@ -81,7 +81,7 @@ class GitHubAPIClient {
         }
 
         let gistFiles = files.mapValues { CreateGistFile(content: $0) }
-        let createRequest = CreateGistRequest(
+        let gistRequest = CreateGistRequest(
             description: description,
             publicGist: isPublic,
             files: gistFiles
@@ -89,7 +89,7 @@ class GitHubAPIClient {
 
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
-        let body = try encoder.encode(createRequest)
+        let body = try encoder.encode(gistRequest)
 
         let request = createRequest(url: url, method: "POST", body: body)
         let (data, response) = try await URLSession.shared.data(for: request)

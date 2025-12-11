@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 struct GistDetailView: View {
     let gist: Gist
@@ -116,7 +117,7 @@ struct GistDetailView: View {
 }
 
 @MainActor
-class GistDetailViewModel: ObservableObject {
+final class GistDetailViewModel: ObservableObject {
     let gist: Gist
     @Published var editableFiles: [GistFile] = []
     @Published var fileContents: [String: String] = [:]

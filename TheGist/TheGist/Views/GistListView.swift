@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 struct GistListView: View {
     @EnvironmentObject var authManager: AuthenticationManager
@@ -124,7 +125,7 @@ struct GistRowView: View {
 }
 
 @MainActor
-class GistListViewModel: ObservableObject {
+final class GistListViewModel: ObservableObject {
     @Published var gists: [Gist] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
