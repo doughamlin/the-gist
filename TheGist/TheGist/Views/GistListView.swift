@@ -5,6 +5,7 @@ struct GistListView: View {
     @EnvironmentObject var authManager: AuthenticationManager
     @StateObject private var viewModel = GistListViewModel()
     @State private var showingCreateSheet = false
+    @State private var showingSettings = false
 
     var body: some View {
         NavigationView {
@@ -57,16 +58,8 @@ struct GistListView: View {
             .navigationTitle("My Gists")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    if let user = authManager.currentUser {
-                        HStack {
-                            Text(user.login)
-                                .font(.subheadline)
-                            Button("Sign Out") {
-                                authManager.signOut()
-                            }
-                            .font(.caption)
-                            .buttonStyle(.bordered)
-                        }
+                    Button(action: { showingSettings = true }) {
+                        Image(systemName: "gearshape")
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -77,6 +70,9 @@ struct GistListView: View {
             }
             .sheet(isPresented: $showingCreateSheet) {
                 CreateGistView(viewModel: viewModel)
+            }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView()
             }
         }
         .task {
