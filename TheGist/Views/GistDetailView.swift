@@ -74,13 +74,10 @@ struct GistDetailView: View {
                             .padding(.horizontal)
                             .padding(.top, 8)
 
-                            TextEditor(text: Binding(
+                            CodeEditor(text: Binding(
                                 get: { viewModel.fileContents[currentFile.filename] ?? "" },
                                 set: { viewModel.fileContents[currentFile.filename] = $0 }
                             ))
-                            .font(.system(.body, design: .monospaced))
-                            .autocapitalization(.none)
-                            .disableAutocorrection(true)
                             .padding(.horizontal, 8)
                         }
                     }

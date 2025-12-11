@@ -28,11 +28,8 @@ struct CreateGistView: View {
                         Text("Content")
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        TextEditor(text: $content)
-                            .font(.system(.body, design: .monospaced))
+                        CodeEditor(text: $content)
                             .frame(minHeight: 200)
-                            .autocapitalization(.none)
-                            .disableAutocorrection(true)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(Color.gray.opacity(0.2), lineWidth: 1)
