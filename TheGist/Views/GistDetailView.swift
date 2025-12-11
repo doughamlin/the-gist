@@ -5,8 +5,8 @@ struct GistDetailView: View {
     let gist: Gist
     @StateObject private var viewModel: GistDetailViewModel
     @State private var showingSaveAlert = false
+    @State private var showingSafariView = false
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.openURL) private var openURL
 
     init(gist: Gist) {
         self.gist = gist
@@ -116,6 +116,12 @@ struct GistDetailView: View {
         } message: {
             Text("Your changes have been saved successfully.")
         }
+        .sheet(isPresented: $showingSafariView) {
+            if let url = URL(string: gist.htmlUrl) {
+                SafariView(url: url)
+                    .ignoresSafeArea()
+            }
+        }
         .task {
             await viewModel.loadGistContent()
         }
@@ -131,9 +137,7 @@ struct GistDetailView: View {
     }
 
     private func openPreview() {
-        if let url = URL(string: gist.htmlUrl) {
-            openURL(url)
-        }
+        showingSafariView = true
     }
 }
 
